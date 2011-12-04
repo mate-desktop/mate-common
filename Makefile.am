@@ -2,7 +2,6 @@ SUBDIRS = macros2 doc-build
 
 EXTRA_DIST = \
 	autogen.sh \
-	mate-common.doap \
 	mate-common.spec \
 	mate-common.spec.in \
 	doc/usage.txt \
