@@ -22,7 +22,7 @@ if [ ! -f "$srcdir/somefile-that-is-only-in-mypackage" ]; then
  exit 1
 fi
 
-. mate-autogen.sh
+. mate-autogen
 ---- Cut Here ----
 
 Then put the following in your configure.ac or configure.in file:

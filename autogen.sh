@@ -14,5 +14,5 @@ PKG_NAME="mate-common"
     exit 1
 }
 
-. $srcdir/macros2/mate-autogen.sh
+. $srcdir/macros2/mate-autogen
 

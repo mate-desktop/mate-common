@@ -4,9 +4,9 @@ MATE2_MACROS = \
   mate-common.m4 \
   mate-compiler-flags.m4
 
-EXTRA_DIST = $(MATE2_MACROS) mate-autogen.sh
+EXTRA_DIST = $(MATE2_MACROS) mate-autogen
 
 aclocaldir = $(datadir)/aclocal
 aclocal_DATA = $(MATE2_MACROS)
 
-bin_SCRIPTS = mate-autogen.sh
+bin_SCRIPTS = mate-autogen
