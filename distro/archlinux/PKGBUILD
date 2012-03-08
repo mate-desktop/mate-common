@@ -22,5 +22,6 @@ build() {
 
 package() {
     cd "${srcdir}/../../../"
+    ln -s mate-autogen ${pkgdir}/usr/bin/mate-autogen.sh
     make DESTDIR="${pkgdir}" install || return 1
 }
