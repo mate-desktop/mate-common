@@ -1,7 +1,7 @@
-This module contains various files needed to bootstrap Mate 2 modules
-built from CVS.  It contains the following components:
+This module contains various files needed to bootstrap MATE modules
+built from GIT.  It contains the following components:
  1. A common "autogen.sh" script that can be used to configure a
-    source directory checked out from CVS.
+    source directory checked out from GIT.
  2. Some commonly used macros (quite a small set these days -- macros
     should be packaged with their respective modules).
  3. Some files used to build user documentation.
