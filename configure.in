@@ -1,7 +1,7 @@
 AC_PREREQ(2.54)
 AC_INIT([mate-common], [1.2.2], [https://github.com/mate-desktop/mate-common])
 
-AC_CONFIG_SRCDIR([macros2/mate-autogen])
+AC_CONFIG_SRCDIR([macros/mate-autogen])
 
 AM_INIT_AUTOMAKE([1.9 foreign no-dist-gzip dist-bzip2])
 
@@ -16,7 +16,7 @@ AM_MAINTAINER_MODE([enable])
 AC_CONFIG_FILES([
 Makefile
 mate-common.spec
-macros2/Makefile
+macros/Makefile
 doc-build/Makefile
 doc-build/mate-doc-common
 ])

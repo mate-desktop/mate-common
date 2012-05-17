@@ -247,7 +247,7 @@ check_m4macros() {
     fi
 }
 
-# try to catch the case where the macros2/ directory hasn't been cleared out.
+# try to catch the case where the macros/ directory hasn't been cleared out.
 forbid_m4macro mate-cxx-check.m4
 
 want_libtool=false
