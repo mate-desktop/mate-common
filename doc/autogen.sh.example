@@ -1,0 +1,27 @@
+#!/bin/sh
+srcdir=`basename $0`
+[ -z "$srcdir" ] && srcdir=.
+
+PKG_NAME=mate-package
+REQUIRED_AUTOMAKE_VERSION=1.7
+
+if [ ! -f "$srcdir/somefile-that-is-only-in-mate-package" ]; then
+echo "$srcdir doesn't look like source directory for $PKG_NAME" >&2
+exit 1
+fi
+
+. mate-autogen
+
+
+#  Then put the following in your configure.ac or configure.in file:
+#    MATE_COMMON_INIT
+#  
+#  This macro is equivalent to the following two lines (which you can use
+#  instead if you don't want to depend on mate-common macros):
+#    AC_SUBST([ACLOCAL_AMFLAGS], ["\${ACLOCAL_FLAGS}"])
+#  
+#  Or if you are using the AC_CONFIG_MACRO_DIR macro:
+#    AC_SUBST([ACLOCAL_AMFLAGS], ["-I $ac_macro_dir \${ACLOCAL_FLAGS}"])
+#  
+#  This will make sure that autoconf macros will be found when you
+#  rebuild the package without rerunning autogen.sh.

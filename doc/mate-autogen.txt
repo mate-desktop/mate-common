@@ -1,0 +1,14 @@
+NAME
+  mate-autogen - generates all makefiles for MATE packages
+SYNOPSIS
+  mate-autogen
+DESCRIPTION
+  mate-autogen generates all makefiles for MATE packages
+  
+  To make use of the common autogen script, create a stub autogen.sh
+  script in your module. Take the example in
+  autogen.sh.example file in mate-common documentation folder
+SEE ALSO
+  autoconf(1), automake(1), autoreconf(1), mate-doc-common(1)
+AUTHOR
+  Perberos <perberos@gmail.com>

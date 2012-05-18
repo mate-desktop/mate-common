@@ -19,6 +19,7 @@ mate-common.spec
 macros/Makefile
 doc-build/Makefile
 doc-build/mate-doc-common
+doc/Makefile
 ])
 
 AC_OUTPUT
