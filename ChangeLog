@@ -1,3 +1,148 @@
+commit 7062e0f001b1938ad26225ed77ce0930e10f53f0
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Fri May 18 11:49:42 2012 +0200
+
+    start 1.3.0
+
+ configure.in |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit b49d86557e8b19b10b00b7ea7585fd4d8f1f79c0
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Fri May 18 11:28:34 2012 +0200
+
+    add manpages (from debian package)
+
+ Makefile.am             |    2 +-
+ configure.in            |    1 +
+ doc/Makefile.am         |    6 ++++++
+ doc/autogen.sh.example  |   27 +++++++++++++++++++++++++++
+ doc/mate-autogen.1      |   22 ++++++++++++++++++++++
+ doc/mate-autogen.txt    |   14 ++++++++++++++
+ doc/mate-doc-common.1   |   41 +++++++++++++++++++++++++++++++++++++++++
+ doc/mate-doc-common.txt |   24 ++++++++++++++++++++++++
+ doc/update-manpages.sh  |   23 +++++++++++++++++++++++
+ 9 files changed, 159 insertions(+), 1 deletion(-)
+
+commit fd691b5d21aae69a79cd32124d43b1d542b69713
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Thu May 17 13:02:52 2012 +0200
+
+    rename macros2 => macros
+
+ Makefile.am                    |    2 +-
+ autogen.sh                     |    2 +-
+ configure.in                   |    4 +-
+ macros/Makefile.am             |   12 +
+ macros/mate-autogen            |  507 ++++++++++++++++++++++++++++++++++++++++
+ macros/mate-common.m4          |   50 ++++
+ macros/mate-compiler-flags.m4  |  141 +++++++++++
+ macros2/Makefile.am            |   12 -
+ macros2/mate-autogen           |  507 ----------------------------------------
+ macros2/mate-common.m4         |   50 ----
+ macros2/mate-compiler-flags.m4 |  141 -----------
+ 11 files changed, 714 insertions(+), 714 deletions(-)
+
+commit 4646b6c6597b0658ffda163816d42ac5ee76ae59
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Wed May 16 18:00:08 2012 +0200
+
+    rename CVS to GIT
+
+ doc/usage.txt |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+commit d18e4a2d02fbece05509c5b82e563f16701f2b0c
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Mon May 7 14:35:17 2012 +0200
+
+    1.2.2 release
+
+ configure.in |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit ab80543d6357b4e877bf819cadf367e15db6a832
+Merge: 1d7fc48 5e83db1
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Tue May 1 07:25:04 2012 -0700
+
+    Merge pull request #2 from MDykstra/master
+    
+    Now have automake-1.12 on my Arch Linux system and mate-common needs a small fix for this
+
+commit 5e83db198fc8cd0bdd2cbf85ada33cdc227024f9
+Author: Marcel Dijkstra <marcel.dykstra@gmail.com>
+Date:   Tue May 1 15:19:00 2012 +0200
+
+    fixes built issue with new automake-1.12
+
+ macros2/mate-autogen |   15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
+
+commit 1d7fc48ba5e96d866a4065851cbd7bb478b0e8a0
+Author: Perberos <perberos@gmail.com>
+Date:   Thu Mar 8 12:33:13 2012 -0300
+
+    mistake
+
+ distro/archlinux/PKGBUILD |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 26d600de9a0a22988d85545341916ba1eaeddb4d
+Author: Perberos <perberos@gmail.com>
+Date:   Wed Mar 7 23:48:48 2012 -0300
+
+    Update distro/archlinux/PKGBUILD
+
+ distro/archlinux/PKGBUILD |    1 +
+ 1 file changed, 1 insertion(+)
+
+commit 68f8bbb9b937a7b2b2df50539d354353449691ae
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Wed Feb 8 20:19:40 2012 +0100
+
+    removed distro/ubuntu folder (we have debian-packages repo now)
+
+ distro/ubuntu/build |   23 -----------------------
+ 1 file changed, 23 deletions(-)
+
+commit 759a18f0a2685fe85099a28edca3cfba57f772ce
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Wed Feb 8 20:17:57 2012 +0100
+
+    rename mate-autogen.sh to mate-autogen
+    https://github.com/mate-desktop/mate-common/issues/1
+    http://lintian.debian.org/tags/script-with-language-extension.html
+
+ AUTHORS                 |    2 +
+ autogen.sh              |    2 +-
+ configure.in            |    4 +-
+ doc/usage.txt           |    2 +-
+ macros2/Makefile.am     |    4 +-
+ macros2/mate-autogen    |  506 +++++++++++++++++++++++++++++++++++++++++++++++
+ macros2/mate-autogen.sh |  506 -----------------------------------------------
+ 7 files changed, 514 insertions(+), 512 deletions(-)
+
+commit ec451fd73bd09d26fccdc7c426ed193ce3948888
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Sat Jan 28 01:12:09 2012 +0100
+
+    prepare for 1.2 release
+
+ configure.in              |    2 +-
+ distro/archlinux/PKGBUILD |    2 +-
+ distro/ubuntu/build       |    2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+commit a15c88e5251e1b124304272878c058ced9821146
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Sat Jan 28 01:11:31 2012 +0100
+
+    add git changelog
+
+ ChangeLog |   97 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 97 insertions(+)
+
 commit 67a61fd8dd672f9d1498904dda8f593b2cad033f
 Author: Perberos <perberos@gmail.com>
 Date:   Tue Jan 24 13:11:22 2012 -0300
@@ -5,7 +150,7 @@ Date:   Tue Jan 24 13:11:22 2012 -0300
     changing pkgbuild source method
 
  distro/archlinux/PKGBUILD |   11 ++++++-----
- 1 files changed, 6 insertions(+), 5 deletions(-)
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
 commit 22834c1f7b3454b97df2d6c7660936bbe8047138
 Author: Stefano Karapetsas <stefano@karapetsas.com>
@@ -14,7 +159,7 @@ Date:   Thu Dec 8 20:38:06 2011 +0100
     updated mate packages required versions
 
  macros2/mate-autogen.sh |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 commit 77db82e252b77ac56c3783366984de6ab46da2ad
 Author: Stefano Karapetsas <stefano@karapetsas.com>
@@ -44,7 +189,7 @@ Date:   Sat Dec 3 21:46:48 2011 -0300
  macros2/Makefile.in   |  399 ------
  mate-common.doap      |   20 -
  missing               |  376 ------
- 10 files changed, 0 insertions(+), 6770 deletions(-)
+ 10 files changed, 6770 deletions(-)
 
 commit c3448737715dcf092591791a00103ea44fdfa99f
 Author: Steve Zesch <stevezesch2@gmail.com>
@@ -95,4 +240,4 @@ Date:   Thu Dec 1 21:46:33 2011 -0300
  mate-common.doap               |   20 +
  mate-common.spec.in            |   39 +
  missing                        |  376 +++++
- 32 files changed, 8615 insertions(+), 0 deletions(-)
+ 32 files changed, 8615 insertions(+)
