@@ -2,10 +2,7 @@ SUBDIRS = macros doc-build doc
 
 EXTRA_DIST = \
 	autogen.sh \
-	mate-common.spec \
-	mate-common.spec.in \
-	doc/usage.txt \
-	ChangeLog.pre-git
+	doc/usage.txt
 
 DISTCHECK_CONFIGURE_FLAGS = --disable-silent-rules
 
