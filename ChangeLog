@@ -1,3 +1,69 @@
+commit 132f62c99b760a0a4c26252758629103afae88c5
+Merge: b2d9fbd d62ca0a
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Fri Jan 11 02:56:11 2013 -0800
+
+    Merge pull request #4 from MDykstra/master
+    
+    Automake turned 13 on Ar ch Linux
+
+commit d62ca0a20670406e047b2c493204b4b4649fe430
+Author: Marcel Dijkstra <marcel.dykstra@gmail.com>
+Date:   Fri Jan 11 11:18:40 2013 +0100
+
+    Automake turned 13 on Arch Linux
+
+ macros/mate-autogen |   17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
+
+commit b2d9fbdce9a35ac1da8a5da72064a4900b160678
+Author: Nelson Marques <nmo.marques@gmail.com>
+Date:   Wed Nov 14 10:01:35 2012 +0000
+
+    fix typo in Makefile.am
+
+ doc/Makefile.am |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 5b31ab7469e1e67f9aa3697767be047f886bd9cc
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Mon Sep 10 14:44:41 2012 +0200
+
+    fix download links in mate-autogen
+
+ macros/mate-autogen |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+commit 3831df9d4b81ac5a23f75c4f92396f7287ebc46d
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Mon Sep 3 10:39:48 2012 +0200
+
+    start 1.5 release
+
+ configure.in |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 35219f8200e845bb7a5c4063917f8818579bfee7
+Author: Stefano Karapetsas <stefano@karapetsas.com>
+Date:   Mon Sep 3 10:39:31 2012 +0200
+
+    remove obsolete mate-common.spec
+
+ Makefile.am         |    5 +----
+ configure.in        |    1 -
+ mate-common.spec.in |   39 ---------------------------------------
+ 3 files changed, 1 insertion(+), 44 deletions(-)
+
+commit 4b97f945fd9ae97724bf8a72865898738bb1c105
+Author: Steve Zesch <stevezesch2@gmail.com>
+Date:   Thu Jul 5 12:44:39 2012 -0400
+
+    Preparing for 1.4 release.
+
+ ChangeLog    |  153 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++--
+ configure.in |    2 +-
+ 2 files changed, 150 insertions(+), 5 deletions(-)
+
 commit 7062e0f001b1938ad26225ed77ce0930e10f53f0
 Author: Stefano Karapetsas <stefano@karapetsas.com>
 Date:   Fri May 18 11:49:42 2012 +0200
