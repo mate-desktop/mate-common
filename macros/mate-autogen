@@ -188,9 +188,8 @@ check_m4macros() {
     # aclocal also searches a version specific dir, eg. /usr/share/aclocal-1.9
     # but it contains only Automake's own macros, so we can ignore it.
 
-    # Read the dirlist file, supported by Automake >= 1.7.
-    # If AUTOMAKE was defined, no version was detected.
-    if [ -z "$AUTOMAKE_VERSION" ] || compare_versions 1.7 $AUTOMAKE_VERSION && [ -s $cm_macrodirs/dirlist ]; then
+    # Read the dirlist file
+    if [ -s $cm_macrodirs/dirlist ]; then
 	cm_dirlist=`sed 's/[ 	]*#.*//;/^$/d' $cm_macrodirs/dirlist`
 	if [ -n "$cm_dirlist" ] ; then
 	    for cm_dir in $cm_dirlist; do
