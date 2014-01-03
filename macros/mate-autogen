@@ -321,6 +321,9 @@ for configure_ac in $configure_files; do
        grep "^MATE_CXX_WARNINGS" $configure_ac >/dev/null; then
         require_m4macro mate-compiler-flags.m4
     fi
+    if grep "^MATE_CODE_COVERAGE" $configure_ac >/dev/null; then
+        require_m4macro mate-code-coverage.m4
+    fi
 done
 
 #tell Mandrake autoconf wrapper we want autoconf 2.5x, not 2.13
