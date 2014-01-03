@@ -281,6 +281,13 @@ want_gtk_doc=false
 want_mate_doc_utils=false
 want_maintainer_mode=false
 
+#tell Mandrake autoconf wrapper we want autoconf 2.5x, not 2.13
+WANT_AUTOCONF_2_5=1
+export WANT_AUTOCONF_2_5
+version_check autoconf AUTOCONF 'autoconf2.50 autoconf autoconf-2.53' $REQUIRED_AUTOCONF_VERSION \
+    "http://ftp.gnu.org/pub/gnu/autoconf/autoconf-$REQUIRED_AUTOCONF_VERSION.tar.gz"
+AUTOHEADER=`echo $AUTOCONF | sed s/autoconf/autoheader/`
+
 find_configure_files() {
     configure_ac=
     if test -f "$1/configure.ac"; then
@@ -290,8 +297,7 @@ find_configure_files() {
     fi
     if test "x$configure_ac" != x; then
 	echo "$configure_ac"
-	# TODO We have not detected the right autoconf yet!
-	autoconf -t 'AC_CONFIG_SUBDIRS:$1' "$configure_ac" | while read dir; do
+	$AUTOCONF -t 'AC_CONFIG_SUBDIRS:$1' "$configure_ac" | while read dir; do
 	    find_configure_files "$1/$dir"
 	done
     fi
@@ -348,13 +354,6 @@ for configure_ac in $configure_files; do
         require_m4macro mate-code-coverage.m4
     fi
 done
-
-#tell Mandrake autoconf wrapper we want autoconf 2.5x, not 2.13
-WANT_AUTOCONF_2_5=1
-export WANT_AUTOCONF_2_5
-version_check autoconf AUTOCONF 'autoconf2.50 autoconf autoconf-2.53' $REQUIRED_AUTOCONF_VERSION \
-    "http://ftp.gnu.org/pub/gnu/autoconf/autoconf-$REQUIRED_AUTOCONF_VERSION.tar.gz"
-AUTOHEADER=`echo $AUTOCONF | sed s/autoconf/autoheader/`
 
 case $REQUIRED_AUTOMAKE_VERSION in
     1.4*) automake_progs="automake-1.4" ;;
