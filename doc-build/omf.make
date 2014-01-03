@@ -36,19 +36,23 @@ omf: omf_timestamp
 
 omf_timestamp: $(omffile)
 	-for file in $(omffile); do \
-	  scrollkeeper-preinstall $(docdir)/$(docname).xml $(srcdir)/$$file $$file.out; \
+	  absfile=$(srcdir)/$$file; \
+	  test -r $$file && absfile=$$file; \
+	  scrollkeeper-preinstall $(docdir)/$(docname).xml $$absfile $$file.out; \
 	done; \
 	touch omf_timestamp
 
 install-data-hook-omf:
 	$(mkinstalldirs) $(DESTDIR)$(omf_dest_dir)
 	for file in $(omffile); do \
-		$(INSTALL_DATA) $$file.out $(DESTDIR)$(omf_dest_dir)/$$file; \
+		absfile=$(srcdir)/$$file.out; \
+		test -r $$file.out && absfile=$$file.out; \
+		$(INSTALL_DATA) $$absfile $(DESTDIR)$(omf_dest_dir)/$$file; \
 	done
 	-scrollkeeper-update -p $(DESTDIR)$(scrollkeeper_localstate_dir) -o $(DESTDIR)$(omf_dest_dir)
 
 uninstall-local-omf:
-	-for file in $(srcdir)/*.omf; do \
+	-for file in $(omffile); do \
 		basefile=`basename $$file`; \
 		rm -f $(DESTDIR)$(omf_dest_dir)/$$basefile; \
 	done

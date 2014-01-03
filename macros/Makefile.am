@@ -2,7 +2,8 @@
 
 MATE2_MACROS = \
   mate-common.m4 \
-  mate-compiler-flags.m4
+  mate-compiler-flags.m4 \
+  mate-code-coverage.m4
 
 EXTRA_DIST = $(MATE2_MACROS) mate-autogen
 
