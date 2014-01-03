@@ -281,7 +281,24 @@ want_gtk_doc=false
 want_mate_doc_utils=false
 want_maintainer_mode=false
 
-configure_files="`find $srcdir -name '{arch}' -prune -o -name '_darcs' -prune -o -name '.??*' -prune -o -name configure.ac -print -o -name configure.in -print`"
+find_configure_files() {
+    configure_ac=
+    if test -f "$1/configure.ac"; then
+	configure_ac="$1/configure.ac"
+    elif test -f "$1/configure.in"; then
+	configure_ac="$1/configure.in"
+    fi
+    if test "x$configure_ac" != x; then
+	echo "$configure_ac"
+	# TODO We have not detected the right autoconf yet!
+	autoconf -t 'AC_CONFIG_SUBDIRS:$1' "$configure_ac" | while read dir; do
+	    find_configure_files "$1/$dir"
+	done
+    fi
+}
+
+configure_files="`find_configure_files .`"
+
 for configure_ac in $configure_files; do
     dirname=`dirname $configure_ac`
     if [ -f $dirname/NO-AUTO-GEN ]; then
