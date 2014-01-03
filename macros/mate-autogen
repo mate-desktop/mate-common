@@ -414,35 +414,6 @@ for configure_ac in $configure_files; do
 	printbold "Processing $configure_ac"
 	cd $dirname
 
-        # Note that the order these tools are called should match what
-        # autoconf's "autoupdate" package does.  See bug 138584 for
-        # details.
-
-        # programs that might install new macros get run before aclocal
-	if grep "^A[CM]_PROG_LIBTOOL" $basename >/dev/null ||
-	   grep "^LT_INIT" $basename >/dev/null; then
-	    printbold "Running $LIBTOOLIZE..."
-	    $LIBTOOLIZE --force --copy || exit 1
-	fi
-
-	if grep "^AM_GLIB_GNU_GETTEXT" $basename >/dev/null; then
-	    printbold "Running $GLIB_GETTEXTIZE... Ignore non-fatal messages."
-	    echo "no" | $GLIB_GETTEXTIZE --force --copy || exit 1
-	elif grep "^AM_GNU_GETTEXT" $basename >/dev/null; then
-	   if grep "^AM_GNU_GETTEXT_VERSION" $basename > /dev/null; then
-	   	printbold "Running autopoint..."
-		autopoint --force || exit 1
-	   else
-	    	printbold "Running $GETTEXTIZE... Ignore non-fatal messages."
-	    	echo "no" | $GETTEXTIZE --force --copy || exit 1
-	   fi
-	fi
-
-	if grep "^AC_PROG_INTLTOOL" $basename >/dev/null ||
-           grep "^IT_PROG_INTLTOOL" $basename >/dev/null; then
-	    printbold "Running $INTLTOOLIZE..."
-	    $INTLTOOLIZE --force --copy --automake || exit 1
-	fi
 	if grep "^GTK_DOC_CHECK" $basename >/dev/null; then
 	    printbold "Running $GTKDOCIZE..."
 	    $GTKDOCIZE --copy || exit 1
@@ -457,54 +428,14 @@ for configure_ac in $configure_files; do
 	    $MATE_DOC_PREPARE --force --copy || exit 1
 	fi
 
-        # Now run aclocal to pull in any additional macros needed
-
-	# if the AC_CONFIG_MACRO_DIR() macro is used, pass that
-	# directory to aclocal.
-	m4dir=`cat "$basename" | grep '^AC_CONFIG_MACRO_DIR' | sed -n -e 's/AC_CONFIG_MACRO_DIR(\([^()]*\))/\1/p' | sed -e 's/^\[\(.*\)\]$/\1/' | sed -e 1q`
-	if [ -n "$m4dir" ]; then
-	    m4dir="-I $m4dir"
+	if grep "^AC_PROG_INTLTOOL" $basename >/dev/null ||
+           grep "^IT_PROG_INTLTOOL" $basename >/dev/null; then
+	    printbold "Running $INTLTOOLIZE..."
+	    $INTLTOOLIZE --force --copy --automake || exit 1
 	fi
-	printbold "Running $ACLOCAL..."
-	$ACLOCAL $m4dir $ACLOCAL_FLAGS || exit 1
-
-	if grep "MATE_AUTOGEN_OBSOLETE" aclocal.m4 >/dev/null; then
-	    printerr "*** obsolete mate macros were used in $configure_ac"
-	fi
-
-	# Now that all the macros are sorted, run autoconf and autoheader ...
-	printbold "Running $AUTOCONF..."
-	$AUTOCONF || exit 1
-	if grep "^A[CM]_CONFIG_HEADER" $basename >/dev/null; then
-	    printbold "Running $AUTOHEADER..."
-	    $AUTOHEADER || exit 1
-	    # this prevents automake from thinking config.h.in is out of
-	    # date, since autoheader doesn't touch the file if it doesn't
-	    # change.
-	    test -f config.h.in && touch config.h.in
-	fi
-
-	# Finally, run automake to create the makefiles ...
-	printbold "Running $AUTOMAKE..."
-        if [ -f COPYING ]; then
-          cp -pf COPYING COPYING.autogen_bak
-        fi
-        if [ -f INSTALL ]; then
-          cp -pf INSTALL INSTALL.autogen_bak
-        fi
-	if [ $REQUIRED_AUTOMAKE_VERSION != 1.4 ]; then
-	    $AUTOMAKE --gnu --add-missing --force --copy -Wno-portability || exit 1
-	else
-	    $AUTOMAKE --gnu --add-missing --copy || exit 1
-	fi
-        if [ -f COPYING.autogen_bak ]; then
-          cmp COPYING COPYING.autogen_bak > /dev/null || cp -pf COPYING.autogen_bak COPYING
-          rm -f COPYING.autogen_bak
-        fi
-        if [ -f INSTALL.autogen_bak ]; then
-          cmp INSTALL INSTALL.autogen_bak > /dev/null || cp -pf INSTALL.autogen_bak INSTALL
-          rm -f INSTALL.autogen_bak
-        fi
+	# Now that all the macros are sorted, run autoreconf ...
+	printbold "Running autoreconf..."
+	autoreconf --verbose --force --install -Wno-portability || exit 1
 
 	cd "$topdir"
     fi
