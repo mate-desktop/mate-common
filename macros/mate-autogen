@@ -52,8 +52,13 @@ case `echo -n x` in
 esac
 
 # some terminal codes ...
-boldface="`tput bold 2>/dev/null`"
-normal="`tput sgr0 2>/dev/null`"
+if tty < /dev/null 1>/dev/null 2>&1; then
+    boldface="`tput bold 2>/dev/null`"
+    normal="`tput sgr0 2>/dev/null`"
+else
+    boldface=
+    normal=
+fi
 printbold() {
     echo $ECHO_N "$boldface" $ECHO_C
     echo "$@"
