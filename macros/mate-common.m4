@@ -35,7 +35,7 @@ AC_DEFUN([MATE_COMMON_INIT],
 AC_DEFUN([MATE_DEBUG_CHECK],
 [
 	AC_ARG_ENABLE([debug],
-                      AC_HELP_STRING([--enable-debug],
+                      AS_HELP_STRING([--enable-debug],
                                      [turn on debugging]),,
                       [enable_debug=no])
 
