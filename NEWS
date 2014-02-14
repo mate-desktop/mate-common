@@ -1,1 +1,5 @@
+1.7.3
 
+  * Replace mate-doc-utils with yelp-tools
+  * Cherry pick many improvements from gnome-common
+  * Use autoreconf
