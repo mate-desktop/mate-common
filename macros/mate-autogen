@@ -461,7 +461,7 @@ for configure_ac in $configure_files; do
 	fi
 	# Now that all the macros are sorted, run autoreconf ...
 	printbold "Running autoreconf..."
-	autoreconf --verbose --force --install -Wno-portability || exit 1
+	autoreconf ${ACLOCAL_FLAGS} --verbose --force --install -Wno-portability || exit 1
 
 	cd "$topdir"
     fi
