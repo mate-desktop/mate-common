@@ -97,6 +97,7 @@ version_check() {
     vc_min_version=$4
     vc_source=$5
     vc_status=1
+    local ${vc_variable}_VERSION
 
     vc_checkprog=`eval echo "\\$$vc_variable"`
     if [ -n "$vc_checkprog" ]; then
