@@ -444,6 +444,11 @@ for configure_ac in $configure_files; do
 	    mkdir -p $m4dir
 	fi
 
+	if grep "^AM_GLIB_GNU_GETTEXT" $basename >/dev/null; then
+	    printbold "Running $GLIB_GETTEXTIZE... Ignore non-fatal messages."
+	    echo "no" | $GLIB_GETTEXTIZE --force --copy || exit 1
+	fi
+
 	if grep "^GTK_DOC_CHECK" $basename >/dev/null; then
 	    printbold "Running $GTKDOCIZE..."
 	    $GTKDOCIZE --copy || exit 1
