@@ -74,7 +74,7 @@ compare_versions() {
     ch_min_version=$1
     ch_actual_version=$2
     ch_status=0
-    IFS="${IFS=         }"; ch_save_IFS="$IFS"; IFS="."
+    IFS="${IFS=	 }"; ch_save_IFS="$IFS"; IFS="."
     set $ch_actual_version
     for ch_min in $ch_min_version; do
         ch_cur=`echo $1 | sed 's/[^0-9].*$//'`; shift # remove letter suffixes
