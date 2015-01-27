@@ -1,6 +1,9 @@
 1.9.1
 
-  * ...
+  * Add support for automake 1.15
+  * Support lcov 1.11
+  * Check for appdata-xml.m4 with APPDATA_XML
+  * Run glib-gettexize if using GLib gettext
 
 1.8.0
 
