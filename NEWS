@@ -1,4 +1,4 @@
-1.9.90
+1.10.0
 
   * Add support for automake 1.15
   * Support lcov 1.11
