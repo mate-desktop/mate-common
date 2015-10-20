@@ -1,29 +1,14 @@
 This module contains various files needed to bootstrap MATE modules
-built from GIT.  It contains the following components:
+built from git.  It contains the following components:
  1. A common "autogen.sh" script that can be used to configure a
-    source directory checked out from GIT.
+    source directory checked out from git.
  2. Some commonly used macros (quite a small set these days -- macros
     should be packaged with their respective modules).
  3. Some files used to build user documentation.
 
 To make use of the common autogen script, create a stub autogen.sh
-script in your module that looks something like this:
-
----- Cut Here ----
-#!/bin/sh
-srcdir=`basename $0`
-[ -z "$srcdir" ] && srcdir=.
-
-PKG_NAME=mypackage
-REQUIRED_AUTOMAKE_VERSION=1.7
-
-if [ ! -f "$srcdir/somefile-that-is-only-in-mypackage" ]; then
- echo "$srcdir doesn't look like source directory for $PKG_NAME" >&2
- exit 1
-fi
-
-. mate-autogen
----- Cut Here ----
+script in your module. See the example script in autogen.sh.example
+file in mate-common documentation folder.
 
 Then put the following in your configure.ac or configure.in file:
   MATE_COMMON_INIT
