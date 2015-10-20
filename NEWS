@@ -1,5 +1,8 @@
 1.11.0
 
+  * Support lcov 1.12
+  * Update docs and example script
+
 1.10.0
 
   * Add support for automake 1.15
