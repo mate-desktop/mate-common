@@ -1,5 +1,5 @@
 To automatically include the standard user documentation build files (omf.make
-and xmldocs.make) in you package, set USE_COMMON_DOC_BUILD=yes in autogen.sh
+and xmldocs.make) in your package, set USE_COMMON_DOC_BUILD=yes in autogen.sh
 before calling the macros2/autogen.sh script.
 
 When porting applications across to use this feature, ensure that all of the
