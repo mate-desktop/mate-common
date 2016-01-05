@@ -1,5 +1,5 @@
 AC_PREREQ(2.54)
-AC_INIT([mate-common], [1.12.0], [https://github.com/mate-desktop/mate-common])
+AC_INIT([mate-common], [1.13.0], [https://github.com/mate-desktop/mate-common])
 
 AC_CONFIG_SRCDIR([macros/mate-autogen])
 
