@@ -22,10 +22,7 @@ test "PKG_NAME" || PKG_NAME=Package
 test "$srcdir" || srcdir=.
 
 # default version requirements ...
-test "$REQUIRED_AUTOCONF_VERSION" || REQUIRED_AUTOCONF_VERSION=2.53
-test "$REQUIRED_AUTOMAKE_VERSION" || REQUIRED_AUTOMAKE_VERSION=1.9
-test "$REQUIRED_LIBTOOL_VERSION" || REQUIRED_LIBTOOL_VERSION=1.4.3
-test "$REQUIRED_GETTEXT_VERSION" || REQUIRED_GETTEXT_VERSION=0.10.40
+test "$REQUIRED_AUTORECONF_VERSION" || REQUIRED_AUTORECONF_VERSION=2.53
 test "$REQUIRED_GLIB_GETTEXT_VERSION" || REQUIRED_GLIB_GETTEXT_VERSION=2.2.0
 test "$REQUIRED_INTLTOOL_VERSION" || REQUIRED_INTLTOOL_VERSION=0.25
 test "$REQUIRED_PKG_CONFIG_VERSION" || REQUIRED_PKG_CONFIG_VERSION=0.14.0
@@ -105,12 +102,7 @@ version_check() {
 	return 0
     fi
 
-    if test "x$vc_package" = "xautomake" -a "x$vc_min_version" = "x1.4"; then
-	vc_comparator="="
-    else
-	vc_comparator=">="
-    fi
-    printbold "checking for $vc_package $vc_comparator $vc_min_version..."
+    printbold "checking for $vc_package >= $vc_min_version..."
     for vc_checkprog in $vc_checkprogs; do
 	echo $ECHO_N "  testing $vc_checkprog... " $ECHO_C
 	if $vc_checkprog --version < /dev/null > /dev/null 2>&1; then
@@ -131,7 +123,7 @@ version_check() {
 	fi
     done
     if [ "$vc_status" != 0 ]; then
-	printerr "***Error***: You must have $vc_package $vc_comparator $vc_min_version installed"
+	printerr "***Error***: You must have $vc_package >= $vc_min_version installed"
 	printerr "  to build $PKG_NAME.  Download the appropriate package for"
 	printerr "  from your distribution or get the source tarball at"
         printerr "    $vc_source"
@@ -185,7 +177,7 @@ print_m4macros_error() {
 # Uses REQUIRED_M4MACROS and ACLOCAL variables.
 check_m4macros() {
     # construct list of macro directories
-    cm_macrodirs=`$ACLOCAL --print-ac-dir`
+    cm_macrodirs=`aclocal --print-ac-dir`
     # aclocal also searches a version specific dir, eg. /usr/share/aclocal-1.9
     # but it contains only Automake's own macros, so we can ignore it.
 
@@ -271,8 +263,6 @@ check_m4macros() {
 # try to catch the case where the macros/ directory hasn't been cleared out.
 forbid_m4macro mate-cxx-check.m4
 
-want_libtool=false
-want_gettext=false
 want_glib_gettext=false
 want_intltool=false
 want_pkg_config=false
@@ -280,12 +270,8 @@ want_gtk_doc=false
 want_yelp_tools=false
 want_maintainer_mode=false
 
-#tell Mandrake autoconf wrapper we want autoconf 2.5x, not 2.13
-WANT_AUTOCONF_2_5=1
-export WANT_AUTOCONF_2_5
-version_check autoconf AUTOCONF 'autoconf2.50 autoconf autoconf-2.53' $REQUIRED_AUTOCONF_VERSION \
-    "http://ftp.gnu.org/pub/gnu/autoconf/autoconf-$REQUIRED_AUTOCONF_VERSION.tar.gz"
-AUTOHEADER=`echo $AUTOCONF | sed s/autoconf/autoheader/`
+version_check autoreconf AUTORECONF 'autoreconf' $REQUIRED_AUTORECONF_VERSION \
+    "http://ftp.gnu.org/pub/gnu/autoconf/autoconf-$REQUIRED_AUTORECONF_VERSION.tar.gz"
 
 find_configure_files() {
     configure_ac=
@@ -296,7 +282,7 @@ find_configure_files() {
     fi
     if test "x$configure_ac" != x; then
 	echo "$configure_ac"
-	$AUTOCONF -t 'AC_CONFIG_SUBDIRS:$1' "$configure_ac" | while read dir; do
+	autoconf -t 'AC_CONFIG_SUBDIRS:$1' "$configure_ac" | while read dir; do
 	    find_configure_files "$1/$dir"
 	done
     fi
@@ -309,13 +295,6 @@ for configure_ac in $configure_files; do
     if [ -f $dirname/NO-AUTO-GEN ]; then
 	echo skipping $dirname -- flagged as no auto-gen
 	continue
-    fi
-    if grep "^A[CM]_PROG_LIBTOOL" $configure_ac >/dev/null ||
-       grep "^LT_INIT" $configure_ac >/dev/null; then
-	want_libtool=true
-    fi
-    if grep "^AM_GNU_GETTEXT" $configure_ac >/dev/null; then
-	want_gettext=true
     fi
     if grep "^AM_GLIB_GNU_GETTEXT" $configure_ac >/dev/null; then
 	want_glib_gettext=true
@@ -357,36 +336,6 @@ for configure_ac in $configure_files; do
         require_m4macro mate-code-coverage.m4
     fi
 done
-
-case $REQUIRED_AUTOMAKE_VERSION in
-    1.4*) automake_progs="automake-1.4" ;;
-    1.5*) automake_progs="automake-1.15 automake-1.14 automake-1.13 automake-1.12 automake-1.11 automake-1.10 automake-1.9 automake-1.8 automake-1.7 automake-1.6 automake-1.5" ;;
-    1.6*) automake_progs="automake-1.15 automake-1.14 automake-1.13 automake-1.12 automake-1.11 automake-1.10 automake-1.9 automake-1.8 automake-1.7 automake-1.6" ;;
-    1.7*) automake_progs="automake-1.15 automake-1.14 automake-1.13 automake-1.12 automake-1.11 automake-1.10 automake-1.9 automake-1.8 automake-1.7" ;;
-    1.8*) automake_progs="automake-1.15 automake-1.14 automake-1.13 automake-1.12 automake-1.11 automake-1.10 automake-1.9 automake-1.8" ;;
-    1.9*) automake_progs="automake-1.15 automake-1.14 automake-1.13 automake-1.12 automake-1.11 automake-1.10 automake-1.9" ;;
-    1.10*) automake_progs="automake-1.15 automake-1.14 automake-1.13 automake-1.12 automake-1.11 automake-1.10" ;;
-    1.11*) automake_progs="automake-1.15 automake-1.14 automake-1.13 automake-1.12 automake-1.11" ;;
-    1.12*) automake_progs="automake-1.15 automake-1.14 automake-1.13 automake-1.12" ;;
-    1.13*) automake_progs="automake-1.15 automake-1.14 automake-1.13" ;;
-    1.14*) automake_progs="automake-1.15 automake-1.14" ;;
-    1.15*) automake_progs="automake-1.15" ;;
-esac
-version_check automake AUTOMAKE "$automake_progs" $REQUIRED_AUTOMAKE_VERSION \
-    "http://ftp.gnu.org/pub/gnu/automake/automake-$REQUIRED_AUTOMAKE_VERSION.tar.gz"
-ACLOCAL=`echo $AUTOMAKE | sed s/automake/aclocal/`
-
-if $want_libtool; then
-    version_check libtool LIBTOOLIZE "libtoolize glibtoolize" $REQUIRED_LIBTOOL_VERSION \
-        "http://ftp.gnu.org/pub/gnu/libtool/libtool-$REQUIRED_LIBTOOL_VERSION.tar.gz"
-    require_m4macro libtool.m4
-fi
-
-if $want_gettext; then
-    version_check gettext GETTEXTIZE gettextize $REQUIRED_GETTEXT_VERSION \
-        "http://ftp.gnu.org/pub/gnu/gettext/gettext-$REQUIRED_GETTEXT_VERSION.tar.gz"
-    require_m4macro gettext.m4
-fi
 
 if $want_glib_gettext; then
     version_check glib-gettext GLIB_GETTEXTIZE glib-gettextize $REQUIRED_GLIB_GETTEXT_VERSION \
