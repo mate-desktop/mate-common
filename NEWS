@@ -1,15 +1,7 @@
 1.16.0
 
-  * bump version
-
-1.15.1
-
-  * Check only for autoreconf.
-    * autoconf, automake, libtool, gettext are already checked by autoreconf.
-
-1.15.0
-
-  * bump version
+  * Check only for autoreconf in mate-autogen as autoconf, automake,
+    libtool, gettext are already checked by autoreconf
 
 1.14.0
 
