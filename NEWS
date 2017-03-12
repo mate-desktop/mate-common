@@ -1,6 +1,7 @@
-### mate-common 1.17.0
+### mate-common 1.18.0
 
-  * Bump version
+  * NEWS: use consistent, project wide, markdown-like formatting
+    to make generating release announcements easier
 
 ### mate-common 1.16.0
 
