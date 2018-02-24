@@ -318,8 +318,8 @@ for configure_ac in $configure_files; do
 	want_maintainer_mode=true
     fi
 
-    if grep "^APPDATA_XML" $configure_ac >/dev/null; then
-        require_m4macro appdata-xml.m4
+    if grep "^APPSTREAM_XML" $configure_ac >/dev/null; then
+        require_m4macro appstream-xml.m4
     fi
 
     # check to make sure mate-common macros can be found ...
