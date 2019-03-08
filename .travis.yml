@@ -52,6 +52,7 @@ requires:
     - git
     - make
     - redhat-rpm-config
+    - xz
 
   ubuntu:
     - autoconf
