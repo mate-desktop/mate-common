@@ -28,13 +28,7 @@ AC_DEFUN([MATE_COMPILE_WARNINGS],[
                                  [Turn on compiler warnings]),,
                   [enable_compile_warnings="m4_default([$1],[yes])"])
 
-    warnCFLAGS=
-    if test "x$GCC" != xyes; then
-	enable_compile_warnings=no
-    fi
-
-    warning_flags=
-    realsave_CFLAGS="$CFLAGS"
+    AC_LANG_PUSH([C])
 
     case "$enable_compile_warnings" in
     no)
@@ -47,24 +41,7 @@ AC_DEFUN([MATE_COMPILE_WARNINGS],[
 	warning_flags="-Wall -Wmissing-prototypes"
 	;;
     maximum|error)
-	warning_flags="-Wall -Wmissing-prototypes -Wnested-externs -Wpointer-arith"
-	CFLAGS="$warning_flags $CFLAGS"
-	for option in -Wno-sign-compare; do
-		SAVE_CFLAGS="$CFLAGS"
-		CFLAGS="$CFLAGS $option"
-		AC_MSG_CHECKING([whether gcc understands $option])
-		AC_TRY_COMPILE([], [],
-			has_option=yes,
-			has_option=no,)
-		CFLAGS="$SAVE_CFLAGS"
-		AC_MSG_RESULT($has_option)
-		if test $has_option = yes; then
-		  warning_flags="$warning_flags $option"
-		fi
-		unset has_option
-		unset SAVE_CFLAGS
-	done
-	unset option
+	warning_flags="-Wall -Wmissing-prototypes -Wbad-function-cast -Wcast-align -Wextra -Wformat-nonliteral -Wmissing-declarations -Wmissing-field-initializers -Wnested-externs -Wpointer-arith -Wredundant-decls -Wshadow -Wstrict-prototypes -Werror=format-security -Wno-sign-compare"
 	if test "$enable_compile_warnings" = "error" ; then
 	    warning_flags="$warning_flags -Werror"
 	fi
@@ -73,32 +50,26 @@ AC_DEFUN([MATE_COMPILE_WARNINGS],[
 	AC_MSG_ERROR(Unknown argument '$enable_compile_warnings' to --enable-compile-warnings)
 	;;
     esac
-    CFLAGS="$realsave_CFLAGS"
-    AC_MSG_CHECKING(what warning flags to pass to the C compiler)
-    AC_MSG_RESULT($warning_flags)
 
-    AC_ARG_ENABLE(iso-c,
-                  AS_HELP_STRING([--enable-iso-c],
-                                 [Try to warn if code is not ISO C ]),,
-                  [enable_iso_c=no])
+    # Always pass -Werror=unknown-warning-option to get Clang to fail on bad
+    # flags, otherwise they are always appended to the warn_cflags variable, and
+    # Clang warns on them for every compilation unit.
+    # If this is passed to GCC, it will explode, so the flag must be enabled
+    # conditionally.
+    AX_CHECK_COMPILE_FLAG([-Werror=unknown-warning-option],[
+        compiler_flags_test="-Werror=unknown-warning-option"
+    ],[
+        compiler_flags_test=""
+    ])
 
-    AC_MSG_CHECKING(what language compliance flags to pass to the C compiler)
-    complCFLAGS=
-    if test "x$enable_iso_c" != "xno"; then
-	if test "x$GCC" = "xyes"; then
-	case " $CFLAGS " in
-	    *[\ \	]-ansi[\ \	]*) ;;
-	    *) complCFLAGS="$complCFLAGS -ansi" ;;
-	esac
-	case " $CFLAGS " in
-	    *[\ \	]-pedantic[\ \	]*) ;;
-	    *) complCFLAGS="$complCFLAGS -pedantic" ;;
-	esac
-	fi
-    fi
-    AC_MSG_RESULT($complCFLAGS)
+    for flag in $warning_flags; do
+         AX_CHECK_COMPILE_FLAG([$flag], [AX_APPEND_FLAG([$flag], [WARN_CFLAGS])], [], [$compiler_flags_test], [])
+    done
 
-    WARN_CFLAGS="$warning_flags $complCFLAGS"
+    AC_MSG_CHECKING(flags to pass to the C compiler $CC)
+    AC_MSG_RESULT(${WARN_CFLAGS})
+
+    AC_LANG_POP([C])
     AC_SUBST(WARN_CFLAGS)
 ])
 
