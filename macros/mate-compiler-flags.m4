@@ -23,14 +23,6 @@ AC_DEFUN([MATE_COMPILE_WARNINGS],[
     dnl More compiler warnings
     dnl ******************************
 
-    m4_ifndef([AX_CHECK_COMPILE_FLAG],[
-        AC_MSG_ERROR([You need to install the autoconf-archive package.])
-    ])
-
-    m4_ifndef([AX_APPEND_FLAG],[
-        AC_MSG_ERROR([You need to install the autoconf-archive package.])
-    ])
-
     AC_ARG_ENABLE(compile-warnings,
                   AS_HELP_STRING([--enable-compile-warnings=@<:@no/minimum/yes/maximum/error@:>@],
                                  [Turn on compiler warnings]),,
