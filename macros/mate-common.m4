@@ -34,15 +34,12 @@ AC_DEFUN([MATE_COMMON_INIT],
 
 AC_DEFUN([MATE_DEBUG_CHECK],
 [
-	AC_ARG_ENABLE([debug],
-                      AS_HELP_STRING([--enable-debug],
-                                     [turn on debugging]),,
-                      [enable_debug=no])
-
-	if test x$enable_debug = xyes ; then
-	    AC_DEFINE(MATE_ENABLE_DEBUG, 1,
-		[Enable additional debugging at the expense of performance and size])
-	fi
+	m4_ifdef([AX_CHECK_ENABLE_DEBUG],[
+		AX_CHECK_ENABLE_DEBUG([
+			m4_default([$1],[no])],[
+			MATE_ENABLE_DEBUG])],[
+		AC_MSG_ERROR([You need to install the autoconf-archive package.])
+	])
 ])
 
 dnl MATE_MAINTAINER_MODE_DEFINES ()
