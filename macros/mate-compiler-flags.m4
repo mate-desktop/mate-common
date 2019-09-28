@@ -82,56 +82,62 @@ AC_DEFUN([MATE_COMPILE_WARNINGS],[
 ])
 
 dnl For C++, do basically the same thing.
-
 AC_DEFUN([MATE_CXX_WARNINGS],[
-  AC_ARG_ENABLE(cxx-warnings,
-                AS_HELP_STRING([--enable-cxx-warnings=@<:@no/minimum/yes@:>@]
-                               [Turn on compiler warnings.]),,
-                [enable_cxx_warnings="m4_default([$1],[minimum])"])
 
-  AC_MSG_CHECKING(what warning flags to pass to the C++ compiler)
-  warnCXXFLAGS=
-  if test "x$GXX" != xyes; then
-    enable_cxx_warnings=no
-  fi
-  if test "x$enable_cxx_warnings" != "xno"; then
-    if test "x$GXX" = "xyes"; then
-      case " $CXXFLAGS " in
-      *[\ \	]-Wall[\ \	]*) ;;
-      *) warnCXXFLAGS="-Wall -Wno-unused" ;;
-      esac
+    m4_ifndef([AX_CHECK_COMPILE_FLAG],[
+        AC_MSG_ERROR([You need to install the autoconf-archive package.])
+    ])
 
-      ## -W is not all that useful.  And it cannot be controlled
-      ## with individual -Wno-xxx flags, unlike -Wall
-      if test "x$enable_cxx_warnings" = "xyes"; then
-	warnCXXFLAGS="$warnCXXFLAGS -Wshadow -Woverloaded-virtual"
-      fi
-    fi
-  fi
-  AC_MSG_RESULT($warnCXXFLAGS)
+    m4_ifndef([AX_APPEND_FLAG],[
+        AC_MSG_ERROR([You need to install the autoconf-archive package.])
+    ])
 
-   AC_ARG_ENABLE(iso-cxx,
-                 AS_HELP_STRING([--enable-iso-cxx],
-                                [Try to warn if code is not ISO C++ ]),,
-                 [enable_iso_cxx=no])
+    AC_ARG_ENABLE(cxx-warnings,
+                  AS_HELP_STRING([--enable-cxx-warnings=@<:@no/minimum/yes/maximum/error@:>@],
+                                 [Turn on compiler warnings.]),,
+                  [enable_cxx_warnings="m4_default([$1],[yes])"])
 
-   AC_MSG_CHECKING(what language compliance flags to pass to the C++ compiler)
-   complCXXFLAGS=
-   if test "x$enable_iso_cxx" != "xno"; then
-     if test "x$GXX" = "xyes"; then
-      case " $CXXFLAGS " in
-      *[\ \	]-ansi[\ \	]*) ;;
-      *) complCXXFLAGS="$complCXXFLAGS -ansi" ;;
-      esac
+    AC_LANG_PUSH([C++])
 
-      case " $CXXFLAGS " in
-      *[\ \	]-pedantic[\ \	]*) ;;
-      *) complCXXFLAGS="$complCXXFLAGS -pedantic" ;;
-      esac
-     fi
-   fi
-  AC_MSG_RESULT($complCXXFLAGS)
+    case "$enable_cxx_warnings" in
+    no)
+	warning_flags=
+	;;
+    minimum)
+	warning_flags="-Wall"
+	;;
+    yes)
+        warning_flags="-Wall -Wno-unused -Woverloaded-virtual"
+	;;
+    maximum|error)
+        warning_flags="-Wall -Wno-unused -Woverloaded-virtual -Wextra -Wshadow -Wformat-nonliteral -Werror=format-security -Wpointer-arith -Wno-sign-compare -Wcast-align -Wmissing-declarations -Wredundant-decls"
+	if test "$enable_compile_warnings" = "error" ; then
+	    warning_flags="$warning_flags -Werror"
+	fi
+	;;
+    *)
+	AC_MSG_ERROR(Unknown argument '$enable_cxx_warnings' to --enable-cxx-warnings)
+	;;
+    esac
 
-  WARN_CXXFLAGS="$CXXFLAGS $warnCXXFLAGS $complCXXFLAGS"
-  AC_SUBST(WARN_CXXFLAGS)
+    # Always pass -Werror=unknown-warning-option to get Clang to fail on bad
+    # flags, otherwise they are always appended to the warn_cflags variable, and
+    # Clang warns on them for every compilation unit.
+    # If this is passed to GCC, it will explode, so the flag must be enabled
+    # conditionally.
+    AX_CHECK_COMPILE_FLAG([-Werror=unknown-warning-option],[
+        compiler_flags_test="-Werror=unknown-warning-option"
+    ],[
+        compiler_flags_test=""
+    ])
+
+    for flag in $warning_flags; do
+         AX_CHECK_COMPILE_FLAG([$flag], [AX_APPEND_FLAG([$flag], [WARN_CXXFLAGS])], [], [$compiler_flags_test], [])
+    done
+
+    AC_MSG_CHECKING(what language compliance flags to pass to the C++ compiler)
+    AC_MSG_RESULT(${WARN_CXXFLAGS})
+
+    AC_LANG_POP([C++])
+    AC_SUBST(WARN_CXXFLAGS)
 ])
