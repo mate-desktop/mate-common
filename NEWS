@@ -1,3 +1,7 @@
+### mate-common 1.23.2
+
+  * Set compiler debug flags in MATE_DEBUG_CHECK
+
 ### mate-common 1.23.1
 
   * Check if AX_APPEND_FLAG and AX_CHECK_COMPILE_FLAG are available
