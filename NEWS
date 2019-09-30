@@ -1,3 +1,7 @@
+### mate-common 1.23.3
+
+  * update MATE_CXX_WARNINGS macro
+
 ### mate-common 1.23.2
 
   * Set compiler debug flags in MATE_DEBUG_CHECK
