@@ -1,0 +1,55 @@
+##########################################################
+# THE FOLLOWING LINES IS USED BY docker-build
+##########################################################
+requires:
+  archlinux:
+    # Useful URL: https://git.archlinux.org/svntogit/community.git/tree/mate-common
+    - autoconf
+    - automake
+    - gcc
+    - git
+    - make
+
+  debian:
+    # Useful URL: https://github.com/mate-desktop/debian-packages
+    # Useful URL: https://salsa.debian.org/debian-mate-team/mate-common
+    - autoconf
+    - git
+    - make
+    - xz-utils
+
+  fedora:
+    # Useful URL: https://src.fedoraproject.org/cgit/rpms/mate-common.git
+    - autoconf
+    - automake
+    - gcc
+    - git
+    - make
+    - redhat-rpm-config
+    - xz
+
+  ubuntu:
+    - autoconf
+    - git
+    - make
+    - xz-utils
+
+variables:
+  - CFLAGS="-Wall -Werror=format-security"
+
+after_scripts:
+  - make distcheck
+
+releases:
+  draft: false
+  prerelease: false
+  checksum: true
+  file_glob: true
+  files: mate-common-*.tar.xz
+  github_release:
+    tags: true
+    overwrite: true
+    base_version: 1.20.0
+    notify_servers:
+      - https://release.mate-desktop.org/release
+
