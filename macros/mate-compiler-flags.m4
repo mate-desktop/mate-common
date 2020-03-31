@@ -49,7 +49,7 @@ AC_DEFUN([MATE_COMPILE_WARNINGS],[
 	warning_flags="-Wall -Wmissing-prototypes"
 	;;
     maximum|error)
-	warning_flags="-Wall -Wmissing-prototypes -Wbad-function-cast -Wcast-align -Wextra -Wformat-nonliteral -Wmissing-declarations -Wmissing-field-initializers -Wnested-externs -Wpointer-arith -Wredundant-decls -Wshadow -Wstrict-prototypes -Werror=format-security -Wno-sign-compare"
+	warning_flags="-Wall -Wmissing-prototypes -Wbad-function-cast -Wcast-align -Wextra -Wno-unused-parameter -Wformat-nonliteral -Wmissing-declarations -Wmissing-field-initializers -Wnested-externs -Wpointer-arith -Wredundant-decls -Wshadow -Wstrict-prototypes -Werror=format-security -Wno-sign-compare"
 	if test "$enable_compile_warnings" = "error" ; then
 	    warning_flags="$warning_flags -Werror"
 	fi
