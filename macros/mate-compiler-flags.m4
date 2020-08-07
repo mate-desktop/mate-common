@@ -110,7 +110,7 @@ AC_DEFUN([MATE_CXX_WARNINGS],[
         warning_flags="-Wall -Woverloaded-virtual"
 	;;
     maximum|error)
-        warning_flags="-Wall -Woverloaded-virtual -Wextra -Wshadow -Wformat-nonliteral -Werror=format-security -Wpointer-arith -Wcast-align -Wmissing-declarations -Wredundant-decls"
+        warning_flags="-Wall -Woverloaded-virtual -Wextra -Wshadow -Wformat-nonliteral -Werror=format-security -Wno-unused-parameter -Wpointer-arith -Wcast-align -Wmissing-declarations -Wredundant-decls"
 	if test "$enable_compile_warnings" = "error" ; then
 	    warning_flags="$warning_flags -Werror"
 	fi
