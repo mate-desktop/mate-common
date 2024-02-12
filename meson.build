@@ -1,5 +1,5 @@
 project('mate-common',
-  version: '1.27.1',
+  version: '1.28.0',
   meson_version: '>=0.50.0',
   license: 'GPLv3+',
 )
