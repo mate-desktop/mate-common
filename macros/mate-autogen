@@ -192,6 +192,14 @@ check_m4macros() {
 	    done
 	fi
     fi
+    
+    # Honor ACLOCAL_PATH
+    save_IFS="$IFS"
+    IFS=:
+    for dir in $ACLOCAL_PATH; do
+       add_to_cm_macrodirs "$dir"
+    done
+    IFS="$save_IFS"
 
     # Parse $ACLOCAL_FLAGS
     set - $ACLOCAL_FLAGS
