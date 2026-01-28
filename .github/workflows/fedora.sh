@@ -14,6 +14,7 @@ requires=(
 	meson  # Used for meson build
 )
 
+# https://src.fedoraproject.org/cgit/rpms/mate-common.git
 requires+=(
 	autoconf
 	automake
