@@ -17,10 +17,21 @@ requires=(
 
 # https://gitlab.archlinux.org/archlinux/packaging/packages/mate-common
 requires+=(
+	autoconf
+	autoconf-archive
+	automake
+	bash
 	gcc
+	gettext
 	git
+	glib2
+	gtk-doc
+	intltool
+	libtool
 	make
+	pkgconf
 	which
+	yelp-tools
 )
 
 infobegin "Update system"
